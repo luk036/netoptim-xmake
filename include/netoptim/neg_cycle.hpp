@@ -119,43 +119,47 @@ class negCycleFinder {
         // ThreadPool pool(std::thread::hardware_concurrency());
         // std::vector<std::future<void>> results;
         // std::vector<std::mutex> n_mutex(this->_G.number_of_nodes());
-        for (auto&& e : this->_G.edges()) {
-            const auto vs = this->_G.end_points(e);
-            const auto& u = vs.first;
-            const auto& v = vs.second;
-            if (u == v) {
-                continue;
-            }  // unlikely
-               // results.emplace_back(pool.enqueue([&, e]() {
+        // for (auto&& e : this->_G.edges()) {
+        for (const auto& u : this->_G) {
             // const auto vs = this->_G.end_points(e);
             // const auto& u = vs.first;
             // const auto& v = vs.second;
-            // auto relax = [&]() {
-            const auto wt = get_weight(e);
-            // assume it takes a long time
-            const auto d = dist[u] + wt;
-            if (dist[v] > d) {
-                this->_pred[v] = u;
-                this->_edge[v] = e;  // TODO
-                dist[v] = d;
-                changed = true;
-            }
-            // };
+            for (const auto& v : this->_G.successors(u)) {
+              if (u == v) {
+                  continue;
+              }  // unlikely
+                 // results.emplace_back(pool.enqueue([&, e]() {
+              // const auto vs = this->_G.end_points(e);
+              // const auto& u = vs.first;
+              // const auto& v = vs.second;
+              // auto relax = [&]() {
+              const auto e = edge_t{u, v};
+              const auto wt = get_weight(e);
+              // assume it takes a long time
+              const auto d = dist[u] + wt;
+              if (dist[v] > d) {
+                  this->_pred[v] = u;
+                  this->_edge[v] = e;  // TODO
+                  dist[v] = d;
+                  changed = true;
+              }
+              // };
 
-            // if (u < v) {
-            //     std::lock_guard lock(n_mutex[u]);
-            //     {
-            //         std::lock_guard lock(n_mutex[v]);
-            //         relax();
-            //     }
-            // } else {
-            //     std::lock_guard lock(n_mutex[v]);
-            //     {
-            //         std::lock_guard lock(n_mutex[u]);
-            //         relax();
-            //     }
-            // }
-            // }));
+              // if (u < v) {
+              //     std::lock_guard lock(n_mutex[u]);
+              //     {
+              //         std::lock_guard lock(n_mutex[v]);
+              //         relax();
+              //     }
+              // } else {
+              //     std::lock_guard lock(n_mutex[v]);
+              //     {
+              //         std::lock_guard lock(n_mutex[u]);
+              //         relax();
+              //     }
+              // }
+              // }));
+            }
         }
 
         // for (auto&& result : results) result.get();

@@ -2,7 +2,7 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK
 
 #include <array>                              // for array
-#include <cppcoro/generator.hpp>              // for operator!=, generator
+// #include <cppcoro/generator.hpp>              // for operator!=, generator
 #include <netoptim/min_cycle_ratio.hpp>       // for min_cycle_ratio
 #include <py2cpp/dict.hpp>                    // for dict
 #include <py2cpp/enumerate.hpp>               // for iterable_wrapper

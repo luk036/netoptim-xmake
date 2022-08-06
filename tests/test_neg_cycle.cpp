@@ -4,7 +4,7 @@
 #include <netoptim/neg_cycle.hpp>  // for negCycleFinder
 // #include <xnetwork/classes/digraphs.hpp>
 #include <array>                              // for array
-#include <cppcoro/generator.hpp>              // for operator!=, generator
+// #include <cppcoro/generator.hpp>              // for operator!=, generator
 #include <py2cpp/dict.hpp>                    // for dict
 #include <py2cpp/enumerate.hpp>               // for iterable_wrapper
 #include <unordered_map>                      // for operator!=

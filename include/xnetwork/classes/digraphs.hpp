@@ -13,7 +13,7 @@
 #include <xnetwork/classes/reportviews.hpp>  // import NodeView, EdgeView, DegreeView
 
 // #if __cplusplus > 201703L
-#    include <cppcoro/generator.hpp>
+// #    include <cppcoro/generator.hpp>
 // #endif
 
 namespace xnetwork {
@@ -488,22 +488,22 @@ namespace xnetwork {
         // }
 
 // #if __cplusplus > 201703L
-        auto edges() const -> cppcoro::generator<edge_t> {
-            if constexpr (std::is_same_v<nodeview_t, decltype(py::range<uint32_t>(
-                                                         uint32_t{}))>) {  // this->_succ???
-                for (auto&& [n, nbrs] : py::enumerate(this->_adj)) {
-                    for (auto&& nbr : nbrs) {
-                        co_yield edge_t{Node(n), Node(nbr)};
-                    }
-                }
-            } else {
-                for (auto&& [n, nbrs] : this->_adj.items()) {
-                    for (auto&& nbr : nbrs) {
-                        co_yield edge_t{n, nbr};
-                    }
-                }
-            }
-        }
+//         auto edges() const -> cppcoro::generator<edge_t> {
+//             if constexpr (std::is_same_v<nodeview_t, decltype(py::range<uint32_t>(
+//                                                          uint32_t{}))>) {  // this->_succ???
+//                 for (auto&& [n, nbrs] : py::enumerate(this->_adj)) {
+//                     for (auto&& nbr : nbrs) {
+//                         co_yield edge_t{Node(n), Node(nbr)};
+//                     }
+//                 }
+//             } else {
+//                 for (auto&& [n, nbrs] : this->_adj.items()) {
+//                     for (auto&& nbr : nbrs) {
+//                         co_yield edge_t{n, nbr};
+//                     }
+//                 }
+//             }
+//         }
 // #endif
 
         // cppcoro::generator<edge_t> edges() const
