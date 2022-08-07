@@ -19,6 +19,7 @@ jobs:
           xmake-version: ${{ matrix.version }}
       - name: Run tests in debug version
         run: |
+          git submodule update --init
           xmake --version
           xmake f -m debug -y
           xmake
