@@ -1,34 +1,25 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
-add_requires("fmt", {alias = "fmt"})
 add_requires("doctest", {alias = "doctest"})
-add_requires("xtensor", {alias = "xtensor"})
--- add_requires("range-v3", {alias = "range-v3"})
-add_requires("conan::range-v3/0.11.0", {alias = "range-v3"})
 
-set_languages("c++20")
+set_languages("c++17")
 
+includes("py2cpp-xmake")
+
+-- header only
 target("NetOptim")
     set_kind("static")
+    add_deps("Py2Cpp")
     add_includedirs("include", {public = true})
-    add_files("src/*.cpp")
-    add_packages("xtensor", "range-v3")
-    if is_plat("linux") then
-        add_cxflags("-fconcepts", {force = true})
-    elseif is_plat("windows") then
-        add_cxflags("/W4 /WX /wd4819 /wd4127", {force = true})
-    end
+    -- add_files("src/*.cpp")
 
 target("test_netoptim")
     set_kind("binary")
+    add_deps("Py2Cpp")
     add_deps("NetOptim")
     add_includedirs("include", {public = true})
     add_files("tests/*.cpp")
-    add_packages("fmt", "doctest", "xtensor", "range-v3")
-    if is_plat("linux") then
-        add_cxflags("-fconcepts", {force = true})
-    elseif is_plat("windows") then
-        add_cxflags("/W4 /WX /wd4819 /wd4127", {force = true})
-    end
+    add_packages("doctest", "xtensor")
+
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
 --
