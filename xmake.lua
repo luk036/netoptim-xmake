@@ -3,7 +3,7 @@ add_requires("doctest", {alias = "doctest"})
 
 set_languages("c++17")
 
-includes("py2cpp-xmake")
+includes("py2cpp-xmake/lib.lua")
 
 -- header only
 target("NetOptim")
