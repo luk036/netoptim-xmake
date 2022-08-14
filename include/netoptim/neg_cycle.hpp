@@ -125,40 +125,40 @@ class negCycleFinder {
             // const auto& u = vs.first;
             // const auto& v = vs.second;
             for (const auto& v : this->_G.successors(u)) {
-              if (u == v) {
-                  continue;
-              }  // unlikely
-                 // results.emplace_back(pool.enqueue([&, e]() {
-              // const auto vs = this->_G.end_points(e);
-              // const auto& u = vs.first;
-              // const auto& v = vs.second;
-              // auto relax = [&]() {
-              const auto e = edge_t{u, v};
-              const auto wt = get_weight(e);
-              // assume it takes a long time
-              const auto d = dist[u] + wt;
-              if (dist[v] > d) {
-                  this->_pred[v] = u;
-                  this->_edge[v] = e;  // TODO
-                  dist[v] = d;
-                  changed = true;
-              }
-              // };
+                if (u == v) {
+                    continue;
+                }  // unlikely
+                   // results.emplace_back(pool.enqueue([&, e]() {
+                // const auto vs = this->_G.end_points(e);
+                // const auto& u = vs.first;
+                // const auto& v = vs.second;
+                // auto relax = [&]() {
+                const auto e = edge_t{u, v};
+                const auto wt = get_weight(e);
+                // assume it takes a long time
+                const auto d = dist[u] + wt;
+                if (dist[v] > d) {
+                    this->_pred[v] = u;
+                    this->_edge[v] = e;  // TODO
+                    dist[v] = d;
+                    changed = true;
+                }
+                // };
 
-              // if (u < v) {
-              //     std::lock_guard lock(n_mutex[u]);
-              //     {
-              //         std::lock_guard lock(n_mutex[v]);
-              //         relax();
-              //     }
-              // } else {
-              //     std::lock_guard lock(n_mutex[v]);
-              //     {
-              //         std::lock_guard lock(n_mutex[u]);
-              //         relax();
-              //     }
-              // }
-              // }));
+                // if (u < v) {
+                //     std::lock_guard lock(n_mutex[u]);
+                //     {
+                //         std::lock_guard lock(n_mutex[v]);
+                //         relax();
+                //     }
+                // } else {
+                //     std::lock_guard lock(n_mutex[v]);
+                //     {
+                //         std::lock_guard lock(n_mutex[u]);
+                //         relax();
+                //     }
+                // }
+                // }));
             }
         }
 
