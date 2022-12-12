@@ -7,7 +7,7 @@ Negative cycle detection for weighed graphs.
 // #include <ThreadPool.h>
 
 #include <cassert>
-#include <chrono>
+// #include <chrono>
 #include <optional>
 #include <py2cpp/py2cpp.hpp>
 #include <vector>
@@ -26,7 +26,7 @@ Negative cycle detection for weighed graphs.
  *  3. BF restarts the solution (dist[u]) every time.
  */
 template <typename Graph> //
-class negCycleFinder {
+class NegCycleFinder {
   using node_t = typename Graph::node_t;
   using edge_t = typename Graph::edge_t;
 
@@ -42,7 +42,7 @@ public:
    *
    * @param[in] G
    */
-  explicit negCycleFinder(const Graph &G) : _G{G} {}
+  explicit NegCycleFinder(const Graph &G) : _G{G} {}
 
   /*!
    * @brief find negative cycle
@@ -117,23 +117,10 @@ private:
   template <typename Container, typename WeightFn>
   auto _relax(Container &&dist, WeightFn &&get_weight) -> bool {
     auto changed = false;
-    // ThreadPool pool(std::thread::hardware_concurrency());
-    // std::vector<std::future<void>> results;
-    // std::vector<std::mutex> n_mutex(this->_G.number_of_nodes());
-    // for (auto&& e : this->_G.edges()) {
     for (const auto &u : this->_G) {
-      // const auto vs = this->_G.end_points(e);
-      // const auto& u = vs.first;
-      // const auto& v = vs.second;
       for (const auto &v : this->_G.successors(u)) {
-        if (u == v) {
-          continue;
-        } // unlikely
-          // results.emplace_back(pool.enqueue([&, e]() {
-        // const auto vs = this->_G.end_points(e);
-        // const auto& u = vs.first;
-        // const auto& v = vs.second;
-        // auto relax = [&]() {
+        // Allow self-loop
+        // assert(u != v);
         const auto e = edge_t{u, v};
         const auto wt = get_weight(e);
         // assume it takes a long time
@@ -144,27 +131,8 @@ private:
           dist[v] = d;
           changed = true;
         }
-        // };
-
-        // if (u < v) {
-        //     std::lock_guard lock(n_mutex[u]);
-        //     {
-        //         std::lock_guard lock(n_mutex[v]);
-        //         relax();
-        //     }
-        // } else {
-        //     std::lock_guard lock(n_mutex[v]);
-        //     {
-        //         std::lock_guard lock(n_mutex[u]);
-        //         relax();
-        //     }
-        // }
-        // }));
       }
     }
-
-    // for (auto&& result : results) result.get();
-
     return changed;
   }
 
@@ -202,8 +170,7 @@ private:
     auto v = handle;
     do {
       const auto u = this->_pred[v];
-      const auto e = this->_edge[v];
-      const auto wt = get_weight(e); // TODO
+      const auto wt = get_weight(this->_edge[v]); // TODO
       if (dist[v] > dist[u] + wt) {
         return true;
       }

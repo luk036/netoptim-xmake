@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 #include <doctest/doctest.h> // for ResultBuilder, TestCase
 
-#include <netoptim/neg_cycle.hpp> // for negCycleFinder
+#include <netoptim/neg_cycle.hpp> // for NegCycleFinder
 // #include <xnetwork/classes/digraphs.hpp>
 #include <array> // for array
 // #include <cppcoro/generator.hpp>              // for operator!=, generator
@@ -27,7 +27,7 @@ template <typename Graph> auto do_case(const Graph &G) -> bool {
   };
 
   auto dist = std::vector<int>(G.number_of_nodes(), 0);
-  auto N = negCycleFinder<Graph>(G);
+  auto N = NegCycleFinder<Graph>(G);
   const auto cycle = N.find_neg_cycle(dist, get_weight);
   return !cycle.empty();
 }

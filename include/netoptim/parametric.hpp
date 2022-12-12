@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 #pragma once
 
-#include "neg_cycle.hpp" // import negCycleFinder
+#include "neg_cycle.hpp" // import NegCycleFinder
 // #include <iostream>
 #include <tuple>
 #include <vector>
@@ -37,7 +37,7 @@ auto max_parametric(const Graph &G, T &r_opt, Fn1 &&d, Fn2 &&zero_cancel,
     return d(r_opt, e);
   };
 
-  auto S = negCycleFinder<Graph>(G);
+  auto S = NegCycleFinder<Graph>(G);
   auto C_opt = std::vector<edge_t>{}; // should initial outside
 
   auto niter = 0U;
