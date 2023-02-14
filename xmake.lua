@@ -3,19 +3,19 @@ add_requires("doctest", {alias = "doctest"})
 
 set_languages("c++17")
 
-includes("py2cpp-xmake/lib.lua")
+-- includes("py2cpp-xmake/lib.lua")
 
 -- header only
-target("NetOptim")
-    set_kind("static")
-    add_deps("Py2Cpp")
-    add_includedirs("include", {public = true})
-    -- add_files("src/*.cpp")
+-- target("NetOptim")
+--     set_kind("static")
+--     add_deps("Py2Cpp")
+--     add_includedirs("include", {public = true})
 
 target("test_netoptim")
     set_kind("binary")
-    add_deps("Py2Cpp")
-    add_deps("NetOptim")
+    -- add_deps("Py2Cpp")
+    -- add_deps("NetOptim")
+    add_includedirs("py2cpp-xmake/include", {public = true})
     add_includedirs("include", {public = true})
     add_files("tests/*.cpp")
     add_packages("doctest", "xtensor")
