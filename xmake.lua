@@ -3,6 +3,10 @@ add_requires("doctest", {alias = "doctest"})
 
 set_languages("c++17")
 
+if is_mode("coverage") then
+    add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
+end
+
 -- includes("py2cpp-xmake/lib.lua")
 
 -- header only
