@@ -1,3 +1,6 @@
 [submodule "py2cpp-xmake"]
 	path = py2cpp-xmake
 	url = https://github.com/luk036/py2cpp-xmake
+[submodule "xnetwork-xmake"]
+	path = xnetwork-xmake
+	url = git@github.com:luk036/xnetwork-xmake.git
